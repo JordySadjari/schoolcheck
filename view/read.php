@@ -1,3 +1,21 @@
+<?php
+const DB_HOST = 'localhost';
+const DB_USERNAME = 'root';
+const DB_PASSWORD = '';
+const DB_NAME = 'schoolcheck';
+
+$mysqli = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
+
+if ($mysqli->connect_errno) {
+    echo "<p>MySQL error no ($mysqli->connect_errno) : ($mysqli->connect_error)</p>";
+    exit();
+}
+$id = $_REQUEST['id'];
+
+
+$query="SELECT * FROM schoolcheck WHERE id = $id";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,94 +28,94 @@
 <div class="container">
     <h1>School check CRUD</h1>
 
-    <div class="row">
-        <p>
-            <a href="?action=create" class="btn btn-succes">Create</a>
-        </p>
 
-        <table class="table table-striped table-bordered">
+        <h2><?php foreach ($mysqli->query($query) as $row){echo $row['schoolname'];}?></h2>
+    <div class="row">
+
+
+        <table class="table table-striped table-bordered" style="margin-bottom: 0;">
             <thead>
             <tr>
-                <th>school</th>
-                <th>adress</th>
-                <th>zipcode</th>
-                <th>district</th>
-                <th>mobile number</th>
-                <th>email</th>
-                <th>website</th>
-                <th>openday</th>
-                <th>openclass</th>
-                <th>infonight</th>
-                <th>private</th>
-                <th>level</th>
-                <th>concept</th>
-                <th>specials</th>
-                <th>tto</th>
-                <th>sports</th>
-                <th>tech</th>
-                <th>spanish</th>
-                <th>vso</th>
-                <th>vmbo-b</th>
-                <th>vmbo-k</th>
-                <th>vmbo-t</th>
-                <th>havo</th>
-                <th>vwo</th>
-                <th>gymnasium</th>
-                <th>basic</th>
-                <th>art</th>
-                <th>actions</th>
+                <th>Address</th>
+                <th>Zip code</th>
+                <th>District</th>
+                <th>Mobile number</th>
+                <th>E-mail</th>
+                <th>Website</th>
+                <th>Open day</th>
+                <th>Open class</th>
+                <th>Info night</th>
+                <th>Private</th>
+                <th>Levels</th>
+                <th>Concept</th>
+                <th>Specials</th>
+
             </tr>
             </thead>
             <tbody>
             <tr>
-                <?php
+            </tr>                <?php
 
 
-                $query="SELECT * FROM schoolcheck";
 
-                foreach ($mysqli->query($query) as $row){
-                    echo '<td>'. $row['schoolname'] . '</td>';
-                    echo '<td>'. $row['adress'] . '</td>';
-                    echo '<td>'. $row['zipcode'] . '</td>';
-                    echo '<td>'. $row['district'] . '</td>';
-                    echo '<td>'. $row['telnr'] . '</td>';
-                    echo '<td>'. $row['email'] . '</td>';
-                    echo '<td>'. $row['website'] . '</td>';
-                    echo '<td>'. $row['openday'] . '</td>';
-                    echo '<td>'. $row['openclass'] . '</td>';
-                    echo '<td>'. $row['infonight'] . '</td>';
-                    echo '<td>'. $row['private'] . '</td>';
-                    echo '<td>'. $row['level'] . '</td>';
-                    echo '<td>'. $row['concept'] . '</td>';
-                    echo '<td>'. $row['specials'] . '</td>';
-                    echo '<td>'. $row['tto'] . '</td>';
-                    echo '<td>'. $row['sports'] . '</td>';
-                    echo '<td>'. $row['tech'] . '</td>';
-                    echo '<td>'. $row['spanish'] . '</td>';
-                    echo '<td>'. $row['vso'] . '</td>';
-                    echo '<td>'. $row['vmbob'] . '</td>';
-                    echo '<td>'. $row['vmbok'] . '</td>';
-                    echo '<td>'. $row['vmbot'] . '</td>';
-                    echo '<td>'. $row['havo'] . '</td>';
-                    echo '<td>'. $row['vwo'] . '</td>';
-                    echo '<td>'. $row['gymnasium'] . '</td>';
-                    echo '<td>'. $row['basis'] . '</td>';
-                    echo '<td>'. $row['art'] . '</td>';
+            foreach ($mysqli->query($query) as $row){
+                echo '<td>'. $row['adress'] . '</td>';
+                echo '<td>'. $row['zipcode'] . '</td>';
+                echo '<td>'. $row['district'] . '</td>';
+                echo '<td>'. $row['telnr'] . '</td>';
+                echo '<td>'. $row['email'] . '</td>';
+                echo '<td>'. $row['website'] . '</td>';
+                echo '<td>'. $row['openday'] . '</td>';
+                echo '<td>'. $row['openclass'] . '</td>';
+                echo '<td>'. $row['infonight'] . '</td>';
+                echo '<td>'. $row['private'] . '</td>';
+                echo '<td>'. $row['levels'] . '</td>';
+                echo '<td>'. $row['concept'] . '</td>';
+                echo '<td>'. $row['specials'] . '</td>';
+            }
 
-                    echo '<td width=250>';
-                    echo '<a class="btn" href="read.php?id='.$row['id'].'">Read</a>';
-                    echo '&nbsp;';
-                    echo '<a class="btn btn-success" href="update.php?id='.$row['id'].'">Update</a>';
-                    echo '&nbsp;';
-                    echo '<a class="btn btn-danger" href="delete.php?id='.$row['id'].'">Delete</a>';
-                    echo '</td>';
-                }
+            ?>
 
-                ?>
-            </tr>
             </tbody>
         </table>
+
+        <table class="table table-striped table-bordered" style="border-top: solid black 2px; corner-rad">
+            <thead><tr>
+        <th>TTO</th>
+        <th>Sports</th>
+        <th>Tech</th>
+        <th>Spanish</th>
+        <th>VSO</th>
+        <th>VMBO-B</th>
+        <th>VMBO-K</th>
+        <th>VMBO-T</th>
+        <th>HAVO</th>
+        <th>VWO</th>
+        <th>Gymnasium</th>
+        <th>Basic</th>
+        <th>Art</th>
+        </tr>
+            </thead>
+            <tbody><tr></tr>
+        <?php
+        foreach ($mysqli->query($query) as $row){
+            echo '<td>'. $row['tto'] . '</td>';
+            echo '<td>'. $row['sports'] . '</td>';
+            echo '<td>'. $row['tech'] . '</td>';
+            echo '<td>'. $row['spanish'] . '</td>';
+            echo '<td>'. $row['vso'] . '</td>';
+            echo '<td>'. $row['vmbob'] . '</td>';
+            echo '<td>'. $row['vmbok'] . '</td>';
+            echo '<td>'. $row['vmbot'] . '</td>';
+            echo '<td>'. $row['havo'] . '</td>';
+            echo '<td>'. $row['vwo'] . '</td>';
+            echo '<td>'. $row['gymnasium'] . '</td>';
+            echo '<td>'. $row['basis'] . '</td>';
+            echo '<td>'. $row['art'] . '</td>';
+        } ?></tbody>
+            </table>
     </div>
+    <a href="?action=home">Back</a>
 </div>
 </body>
 </html>
